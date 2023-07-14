@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations</title>
+  <style>
+    :root {
+      --global-color: #ff6a00;
+      --global-secondary-color: #ffb681;
+      --global-background: rgb(225, 225, 225);
+      --global-border-radius: 3rem;
+      --global-font-family: sans-serif;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: rgb(49, 49, 49);
+      background: var(--global-background);
+    }
+    main {
+          max-width: 800px;
+          margin: 0 auto;
+          align-items: center;
+    }
+    h1 {
+          font-size: 36px;
+          margin-bottom: 20px;
+          text-align: center;
+          color: var(--global-color);
+    }
+    table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 30px;
+    }
+    th, td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #dddddd;
+    }
+    th {
+          background-color: #333333;
+          color: #ffffff;
+    }
+    tr:nth-child(even) {
+          background-color: var(--global-secondary-color);
+    }
+    #form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+    }
+    form {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 400px;
+    }
+    input[type="text"], input[type="password"], input[type="email"] {
+          padding: 10px;
+          width: 100%;
+          
+          border: 1px solid #dddddd;
+          border-radius: 4px;
+      }
+      input[type="submit"] {
+          background-color: #ff6f00;
+          color: #ffffff;
+          font-size: 16px;
+          padding: 10px 20px;
+          margin-top: 10px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+      }
+      input[type="submit"]:hover {
+          background-color: #ff4500;
+      }
+      header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Reservations</h1>
+    <h2 style="cursor: pointer;" th:onclick="editUser()">Account</h2>
+  </header>
+  <main>
+    <div id="content-container">
+      <table>
+        <tbody>
+          <tr>
+            <th>Date</th>
+            <th>Duration</th>
+            <th>accepted</th>
+          </tr>
+          <tr id="listInput">
+            <!-- <td th:text="${reservation.date}"></td>
+            <td th:text="${reservation.duration}"></td>
+            <td th:text="${reservation.accepted}"></td>
+            <a href="/api/reservation/${reservation.id}/delete"><td>cancel</td></a> -->
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="form">
+        <h2>Make a new Reservation: </h2>
+        <form id="reservateForm" action="/api/reservation/create" method="POST">
+          <input type="date" name="date" id="date" placeholder="Reservation Date"><br>
+          <div>
+          <input type="radio" name="duration" id="halfday" placeholder="Halfday" value="HALF_DAY">
+          <label for="halfday">Halfday</label>
+          </div>
+          <div>
+          <input type="radio" name="duration" id="fullday" placeholder="Fullday" value="FULL_DAY">
+          <label for="fullday">Fullday</label>
+          </div>
+          <input type="submit" value="Submit" onclick="submitForm(event)">
+        </form>
+      </div>
+    </div>
+  </main> 
+  <script>
+    let header = document.querySelector("header");
+    if (localStorage.getItem("role") == "MEMBER") {
+      console.log("member");
+      header.innerHTML = '<h1>Reservations</h1><h2 style="cursor: pointer;" onclick="editUser()">Account</h2>';
+    } else if (localStorage.getItem("role") == "ADMIN") {
+      header.innerHTML = `<h1>Reservations</h1><h2 style="cursor: pointer;" onclick="window.location.href = '/web/users'">User List</h2>`
+    }
+
+    console.log(localStorage.getItem("role"));
+    console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem("id"));
+    //console.log(localStorage.getItem("currntMail"));
+    // Client-side code
+    function getReservationList() {
+      if (localStorage.getItem("role") == null){
+        window.location.href = "/web/login";
+      }
+      fetch('/api/reservation/list', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token') // Include the token from localStorage
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Clear existing table rows
+          const tableBody = document.querySelector('tbody');
+          tableBody.innerHTML = `<tr>
+              <th>Reservation ID</th>
+              <th>Date</th>
+              <th>Duration</th>
+              <th>Accepted</th>
+              <th> </th>
+              </tr>`;
+
+          // Populate table with reservation data
+          data.forEach(reservation => {
+            const row = document.createElement('tr');
+            if (localStorage.getItem("role") == "ADMIN"){
+              row.innerHTML = `
+              <td>${reservation.id}</td>
+              <td>${reservation.date}</td>
+              <td>${reservation.duration}</td>
+              <td>${reservation.accepted}</td>
+              <td><div onclick="acceptRes(${reservation.id})" style="cursor: pointer;">accept</div></td>
+            `;
+            } else if (localStorage.getItem("role") == "MEMBER"){
+              row.innerHTML = `
+              <td>${reservation.id}</td>
+              <td>${reservation.date}</td>
+              <td>${reservation.duration}</td>
+              <td>${reservation.accepted}</td>
+              <td><div onclick="deleteRes(${reservation.id})" style="cursor: pointer;">delete</div></td>
+            `;
+            }
+            tableBody.appendChild(row);
+          });
+        });
+    }
+
+    // Call the function to fetch and populate the reservations on page load
+    window.onload = function() {
+      getReservationList();
+    };
+
+    function deleteRes(id){
+      var newid = parseInt(id);
+      fetch(`/api/reservation/${newid}/delete`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token') // Include the token from localStorage
+        }
+      });
+      window.location.reload();
+    }
+
+    function acceptRes(id){
+      var newid = parseInt(id);
+      fetch(`/api/reservation/${newid}/accept`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token') // Include the token from localStorage
+        }
+      });
+      window.location.reload();
+    }
+
+    // Client-side code
+    function submitForm() {
+      event.preventDefault();
+
+      // Get form data
+      let formData = new FormData(document.querySelector('#reservateForm'));
+      for (let entry of formData.entries()) {
+        console.log(entry[0] + ': ' + entry[1]);
+      }
+      
+      formData.append("userId", localStorage.getItem("id"));
+      // Submit form data to REST controller's URL using AJAX
+      fetch('/api/reservation/create', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token') // Include the token from localStorage
+        },
+        body: formData
+      })
+      .then(response => response.json())
+
+
+      .then(data => {
+        window.location.reload();
+        // Redirect to desired URL from web controller
+        //window.location.href = '/web/login';
+      });
+    }
+
+    function editUser(){
+      window.location.href = `/web/${localStorage.getItem("id")}/edit`;
+    }
+  </script>   
+</body>
+</html>
