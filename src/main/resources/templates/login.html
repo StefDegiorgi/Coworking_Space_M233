@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+  <style>
+    :root {
+      --global-color: #ff6a00;
+      --global-secondary-color: #ffb681;
+      --global-background: rgb(225, 225, 225);
+      --global-border-radius: 3rem;
+      --global-font-family: sans-serif;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: rgb(49, 49, 49);
+      background: var(--global-background);
+    }
+    main {
+          max-width: 800px;
+          margin: 0 auto;
+          align-items: center;
+    }
+    h1 {
+          font-size: 36px;
+          margin-bottom: 20px;
+          text-align: center;
+          color: var(--global-color);
+    }
+    #form {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    form {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 400px;
+    }
+    input[type="text"], input[type="password"], input[type="email"] {
+          padding: 10px;
+          width: 100%;
+          
+          border: 1px solid #dddddd;
+          border-radius: 4px;
+      }
+      input[type="submit"] {
+          background-color: #ff6f00;
+          color: #ffffff;
+          font-size: 16px;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+      }
+      input[type="submit"]:hover {
+          background-color: #ff4500;
+      }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Login</h1>
+    <div id="content-container">
+      <div id="form">
+        <form id="registerForm" action="/api/user/login" method="POST">
+          <input type="email" name="email" id="email" placeholder="Email"><br>
+          <input type="password" name="password" id="password" placeholder="Password"><br>
+          <div>
+            <input style="margin-bottom: 20px;" type="checkbox" onclick="show()">Show password
+        </div>
+          <input type="submit" value="Submit" onclick="submitForm(event)">
+        </form>
+      </div>
+    </div>
+  </main>
+  <script>
+    function show() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+
+    // Client-side code
+    function submitForm() {
+      event.preventDefault();
+
+      var email = document.getElementById('email');
+      var password = document.getElementById('password');
+      var data = {
+        email: email,
+        password: password
+      };
+
+      // Get form data
+      var formData = new FormData(document.querySelector('#registerForm'));
+
+      // Submit form data to REST controller's URL using AJAX
+      fetch('/api/user/login', {
+          method: 'POST',
+          
+          body: formData
+      })
+      .then(response => {
+          // response.json();
+          // console.log(response);
+          // const jwt = response.headers.get("Authorization").split(' ')[1];
+          // console.log("jwt: "+ jwt);
+
+          const jwtToken = response.headers.get('Authorization').split(' ')[1];
+          //console.log("JWT Token: " + jwtToken + response.headers.get('Email'));
+          response.json();
+          localStorage.setItem("token", jwtToken);
+          localStorage.setItem("currntMail", response.headers.get('Email'));
+          localStorage.setItem("id", response.headers.get('id'));
+          localStorage.setItem("role", response.headers.get('role'));
+      })
+      .then(data => { 
+          console.log(data);
+          // Redirect to desired URL from web controller
+          if (localStorage.getItem("role") == "MEMBER") {
+            window.location.href = '/web/reservations';
+          } else if (localStorage.getItem("role") == "ADMIN") {
+            window.location.href = '/web/users';
+          }
+      });
+}
+  </script>
+</body>
+</html>

@@ -1,0 +1,1126 @@
+{
+	"info": {
+		"_postman_id": "92402fc5-229d-4f97-8172-23a4de381a61",
+		"name": "M223",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28535556"
+	},
+	"item": [
+		{
+			"name": "E2E-Testing: Registrierung, Athentifizierung",
+			"item": [
+				{
+					"name": "register valid user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"firstname\": \"Max\",\r\n\"lastname\": \"SI-UU\",\r\n\"email\": \"max@siou.ch\",\r\n\"password\": \"asd34454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register already used email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(409);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"firstname\": \"Max\",\r\n\"lastname\": \"SI-UU\",\r\n\"email\": \"max@siu.ch\",\r\n\"password\": \"asd34454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register empty password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"max\",\r\n    \"lastname\": \"trax\",\r\n    \"email\": \"max@traxi.com\",\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register empty email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"firstname\": \"max\",\r\n\"lastname\": \"trax\",\r\n\"email\": \"\",\r\n\"password\": \"ycxvyxvc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login valid user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"email\": \"max@siu.ch\",\r\n\"password\": \"asd34454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login wrong password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"email\": \"max@siu.ch\",\r\n\"password\": \"max\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login unused email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"email\": \"hellloadfaf@fajdskfhkj.com\",\r\n\"password\": \"max\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "E2E-Testing: Verwaltung der eigenen Reservierungen (Mitglied)",
+			"item": [
+				{
+					"name": "list reservation as a valid member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list reservation as a invalid member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUozUxMiJ9.eyJzdWIiOiJtYXhAdHJheC5jb20iLCJyb2xlIfjoiTUVNQkVSIiwiaWQiOjEsImlhdCI6MTY4OTI0MTI2MSwiZXhwIjoxNjg5MzI3NjYxfQ.vo1Ruc0XUK0FC9VZ2I11__nRdQimfdXyMrexzKAr8wag0scdVpE8oWrJJouWpm4VjpWeIdwVIBlWJQMECimMEQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "book a Coworkingspace as a valid member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"date\": \"2023-09-09\",\r\n\"duration\": \"HALF_DAY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "book a Coworkingspace as a invalid member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"date\": \"2023-09-09\",\r\n\"duration\": \"HALF_DAY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete own reservation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/booking/1/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"booking",
+								"1",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete reservation of sb else",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/2/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"2",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "E2E_Testing: Verwaltung der Reservierungen",
+			"item": [
+				{
+					"name": "delete reservationof sb else as a Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/reservation/2/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"2",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update sb reservation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"date\": \"2025-08-08\",\r\n\"duration\": \"FULL_DAY\",\r\n\"userId\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/1/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update sb reservation as a invalid user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"date\": \"2025-08-08\",\r\n\"duration\": \"HALF_DAY\",\r\n\"userId\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/1/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept a reservation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/reservation/1/accept",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"1",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept a reservation as a invalid user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGclOiJIUzUxMiJ9.eyJzdWIiOiJkYWJvc3NAZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpZCI6NCwiaWF0IjoxNjg5MjQ3ODg2LCJleHAiOjE2ODkzMzQyODZ9.OvrbwQnA-8BfFy31zhqAx-3DMvtV_7vtGG45263xz9sh_gPUpiy4OyWDb36D9vJqdTVoQUwFj1B7huGtGJg9hA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/reservation/2/accept",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"2",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "E2E-Testing: Verwaltung von Mitgliedern",
+			"item": [
+				{
+					"name": "update user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"firstname\": \"OmegaMaxFf\",\r\n\"lastname\": \"tax\",\r\n\"email\": \"dajfha@gmail.com\",\r\n\"password\": \"dhjfaadf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/1/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update as a invalid user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"firstname\": \"Max\",\r\n\"lastname\": \"tax\",\r\n\"email\": \"hens@jenns.com\",\r\n\"password\": \"Ze7rh7hh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/1/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/user/1/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "E2E-Testing: Zusätzliche Anforderungen",
+			"item": [
+				{
+					"name": "delete own account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/user/1/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete sb elses account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(403);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/user/2/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"2",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update own account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXhAc2l1LmNoIiwicm9sZSI6Ik1FTUJFUiIsImlkIjoxLCJpYXQiOjE2ODkzMzM0NzEsImV4cCI6MTY4OTQxOTg3MX0.zfpsLkSXwK1AsdiDKQ-Gc9MAg6gQMH3Hqz8zhIdjpYDQ01Yt5gIBR5RmPMpXmE7V1115Hekektb6p2HSsyQ_WA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"firstname\": \"MaxTrax\",\r\n\"lastname\": \"SI-UU\",\r\n\"email\": \"max@siu.ch\",\r\n\"password\": \"asd34454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/1/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

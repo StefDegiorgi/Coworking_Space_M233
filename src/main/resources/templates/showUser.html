@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.firstname}"></title>
+    <style>
+        :root {
+      --global-color: #ff6a00;
+      --global-secondary-color: #ffb681;
+      --global-background: rgb(225, 225, 225);
+      --global-border-radius: 3rem;
+      --global-font-family: sans-serif;
+    }
+
+    body {
+      font-family: sans-serif;
+      color: rgb(49, 49, 49);
+      background: var(--global-background);
+    }
+    main {
+          max-width: 800px;
+          margin: 0 auto;
+          align-items: center;
+    }
+    h1 {
+          font-size: 36px;
+          margin-bottom: 20px;
+          text-align: center;
+          color: var(--global-color);
+    }
+    table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 30px;
+    }
+    th, td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #dddddd;
+    }
+    th {
+          background-color: #333333;
+          color: #ffffff;
+    }
+    tr:nth-child(even) {
+          background-color: var(--global-secondary-color);
+    }
+    </style>
+</head>
+<body>
+<h1>User: <span th:text="${user.firstname}"></span></h1>
+<table>
+    <tbody>
+        <tr>
+        <th th:title="${'ID'}">ID</th>
+        <th th:title="${'FIRSTNAME'}">Firstname</th>
+        <th th:title="${'LASTNAME'}">Lastname</th>
+        <th th:title="${'EMAIL'}">E-Mail</th>
+        <th th:title="${'PASSWORD'}">Password</th>
+        </tr>
+        
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.firstname}"></td>
+        <td th:text="${user.lastname}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.password}"></td>
+    </tbody>
+    </table>
+    <script>
+      window.onload = function() {
+      if (localStorage.getItem("role") == null){
+        window.location.href = "/web/login";
+      }
+    }
+    </script>
+</body>
+</html>
