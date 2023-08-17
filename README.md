@@ -11,8 +11,8 @@ git clone https://github.com/StefanoBZZ/Coworking_Space_M233.git
 Um das Projekt zum laufen zu bringen, muss der Knopf mit **RUN** drücken und URL: http://localhost:8080/web/login öffnen
 
 ### Login
-Username: admin
-Password: admin
+- Username: admin
+- Password: admin
 
 ### TestDaten
 Die TestDaten können im folgenden Ordner gefunden werden: 
