@@ -1,22 +1,21 @@
-# CoworkingSpaceM223
-Das CoworkingSpace-Projekt des Moduls 223 umfasst drei Rollen: Gast, Mitglied und Administrator. Als Gast ist es möglich, sich zu registrieren und anschließend einzuloggen, wodurch man zum Mitglied wird. Als Mitglied hat man die Möglichkeit, an ausgewählten Tagen entweder einen halben oder einen ganzen Tag im CoworkingSpace zu reservieren. Darüber hinaus kann ein Mitglied seine Benutzerdaten wie Vorname, Nachname, E-Mail und Passwort ändern.
-Der Administrator hat die Befugnis, zu sehen, welche Mitglieder an welchen Tagen eine Reservierungsanfrage für einen ganzen oder halben Tag gestellt haben. Er kann dann entscheiden, ob er die Anfrage akzeptieren oder ablehnen möchte. Darüber hinaus hat der Administrator natürlich auch die Möglichkeit, den CoworkingSpace selbst zu reservieren. In einer weiteren Ansicht hat der Administrator eine Übersicht über die Mitglieder und kann diese bearbeiten oder löschen. 
+# CoworkingSpace
+The CoworkingSpace project includes three roles: Guest, Member and Administrator. As a guest, it is possible to register and then log in, which makes one a member. As a member, one has the possibility to reserve either a half or a full day in the CoworkingSpace on selected days. In addition, a member can change his user data such as first name, last name, email and password. The administrator has the authority to see which members have made a reservation request for a full or half day on which days. He can then decide whether to accept or reject the request. In addition, of course, the administrator also has the option to reserve the CoworkingSpace himself. In another view, the administrator has an overview of the members and can edit or delete them.
 # Getting started
 ### Installation
-Um das Projekt zu installieren, kann man es fon GitHub klonen: 
+To install the project, you can clone it from GitHub: 
 ```
 git clone https://github.com/StefanoBZZ/Coworking_Space_M233.git
 ```
-### Exekution 
-Um das Projekt zum laufen zu bringen, muss der Knopf mit **RUN** drücken und URL: http://localhost:8080/web/login öffnen
+### Get started 
+To get the project running, the button **Run** must be pressed and URL: Open http://localhost:8080/web/login opened
 
 ### Login
 - Username: admin
 - Password: admin
 
-### TestDaten
-Die TestDaten können im folgenden Ordner gefunden werden: 
+### TestData
+The test data can be found in the following folder:
 ```
 /src/test/M223.postman_collection.json
 ```
-Das JSON File kann importiert und exekutiert werden in [Postman](https://www.postman.com/).
+The JSON file can be imported and executed in [Postman](https://www.postman.com/).
